@@ -13,7 +13,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(QQSettings);
 
-@synthesize inDebugMode, consumeKey, apiURL, apiURLAuth;
+@synthesize inDebugMode, consumeKey, apiURL, apiURLAuth, lastAPIRequest;
 
 - (void)LogThis:(NSString *)log, ... {
 	if (self.inDebugMode) {
@@ -42,6 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(QQSettings);
 		self.consumeKey = @"pBjnkNsSR02fnbPARTwOlg";
 		self.apiURL = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"QQAPIURL"];
 		self.apiURLAuth = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"QQAPIURLAuth"];
+        self.lastAPIRequest = nil;
 	}
 	return self;
 }

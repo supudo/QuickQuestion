@@ -17,6 +17,7 @@ static NSString *kCellIdentifier = @"identifSites";
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.navigationItem.title = NSLocalizedString(@"Sites", @"Sites");
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(loadSites)] autorelease];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

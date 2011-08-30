@@ -10,6 +10,11 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon.png</string>
+		<string>Icon@2x.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.supudo.net.apps.QuickQuestion</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -26,11 +31,12 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
-	</array>
+	<key>QQAPIURL</key>
+	<string>http://api.stackoverflow.com/1.1/</string>
+	<key>QQAPIURLAuth</key>
+	<string>http://stackauth.com/1.1/</string>
+	<key>QQInDebugMode</key>
+	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ubuntu-Bold.ttf</string>
@@ -42,11 +48,9 @@
 		<string>Ubuntu-MediumItalic.ttf</string>
 		<string>Ubuntu-Regular.ttf</string>
 	</array>
-	<key>QQInDebugMode</key>
-	<true/>
-	<key>QQAPIURL</key>
-	<string>http://api.stackoverflow.com/1.1/</string>
-	<key>QQAPIURLAuth</key>
-	<string>http://stackauth.com/1.1/</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
 </dict>
 </plist>

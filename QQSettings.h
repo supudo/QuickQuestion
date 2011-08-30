@@ -12,10 +12,12 @@
 @interface QQSettings : NSObject {
 	BOOL inDebugMode;
 	NSString *consumeKey, *apiURL, *apiURLAuth;
+    NSDate *lastAPIRequest;
 }
 
 @property BOOL inDebugMode;
 @property (nonatomic, retain) NSString *consumeKey, *apiURL, *apiURLAuth;
+@property (nonatomic, retain) NSDate *lastAPIRequest;
 
 - (void)LogThis:(NSString *)log, ...;
 - (BOOL)connectedToInternet;

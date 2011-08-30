@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="562" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="JSON" representedClassName="dbJSON">
+        <attribute name="JSONData" optional="YES" attributeType="String"/>
+        <attribute name="RequestMethod" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="RequestParams" optional="YES" attributeType="String"/>
+        <attribute name="Timestamp" optional="YES" attributeType="Date"/>
+    </entity>
+    <elements>
+        <element name="JSON" positionX="-12159" positionY="-7488" width="128" height="105"/>
+    </elements>
+</model>
