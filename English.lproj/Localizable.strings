@@ -1,0 +1,16 @@
+/* 
+   Localizable.strings
+   QuickQuestion
+
+   Created by supudo on 8/30/11.
+   Copyright 2011 supudo.net. All rights reserved.
+ */
+
+"MainNavTitle" = "QuickQuestion";
+"Loading" = "Loading...";
+
+"Sites" = "Sites";
+
+"UI.RefreshPullDown" = "Pull down to refresh...";
+"UI.RefreshRelease" = "Release to refresh...";
+"UI.RefreshLoading" = "Loading...";
