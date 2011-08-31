@@ -1,18 +1,19 @@
 //
-//  Search.m
+//  Sites.m
 //  QuickQuestion
 //
 //  Created by supudo on 8/29/11.
 //  Copyright 2011 supudo.net. All rights reserved.
 //
 
-#import "Search.h"
+#import "Sites.h"
+#import "SearchBy.h"
 
 static NSString *kCellIdentifier = @"identifSites";
 
-@implementation Search
+@implementation Sites
 
-@synthesize webService, seSites, loadMetaSites;
+@synthesize webService, seSites, loadMetaSites, cellSite;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -38,13 +39,14 @@ static NSString *kCellIdentifier = @"identifSites";
 		seSites = [[NSMutableArray alloc] init];
 
 	[seSites removeAllObjects];
-	NSDictionary *sites = [webService getSitesDictionary:0 pageSize:0];
+	NSDictionary *sites = [webService getSites:0 pageSize:0];
 	for (int i=0; i<[[sites valueForKey:@"items"] count]; i++) {
 		if (loadMetaSites)
 			[seSites addObject:[[[sites valueForKey:@"items"] objectAtIndex:i] valueForKey:@"main_site"]];
 		else if ([[[[[sites valueForKey:@"items"] objectAtIndex:i] valueForKey:@"main_site"] valueForKey:@"state"] isEqualToString:@"normal"])
 			[seSites addObject:[[[sites valueForKey:@"items"] objectAtIndex:i] valueForKey:@"main_site"]];
 	}
+    NSLog(@"%@", seSites);
 	loadMetaSites = !loadMetaSites;
 	
 	[self.tableView reloadData];
@@ -63,23 +65,25 @@ static NSString *kCellIdentifier = @"identifSites";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
-	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-		cell.textLabel.font = [UIFont fontWithName:@"Ubuntu" size:14.0];
-		cell.detailTextLabel.font = [UIFont fontWithName:@"Ubuntu" size:14.0];
-	}
 	NSDictionary *ent = [seSites objectAtIndex:indexPath.row];
-	//cell.imageView.image = [ent valueForKey:@"name"];
-	cell.textLabel.text = [ent valueForKey:@"name"];
-	[cell.textLabel setFont:[UIFont fontWithName:@"Ubuntu" size:14.0]];
-	//cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ // %@", (([ento.HumanYn boolValue]) ? NSLocalizedString(@"Offer_IShort_Human", @"Offer_IShort_Human") : NSLocalizedString(@"Offer_IShort_Company", @"Offer_IShort_Company")), [[bSettings sharedbSettings] getOfferDate:ento.PublishDate]];
+    CellSite *cell = (CellSite *)[tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CellSite" owner:self options:nil];
+        cellSite = (CellSite *)[nib objectAtIndex:0];
+        cell = [[cellSite retain] autorelease];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cellSite = nil;
+    }
+    [cell setContent:[ent valueForKey:@"name"] withLogo:[ent valueForKey:@"favicon_url"]];
 	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [QQSettings sharedQQSettings].selectedSite = [seSites objectAtIndex:indexPath.row];
+	SearchBy *tvc = [[SearchBy alloc] initWithNibName:@"SearchBy" bundle:nil];
+	[[self navigationController] pushViewController:tvc animated:YES];
+	[tvc release];
 }
 
 - (void)refresh {
@@ -103,12 +107,15 @@ static NSString *kCellIdentifier = @"identifSites";
 	[webService release];
 	seSites = nil;
 	[seSites release];
+    cellSite = nil;
+    [cellSite release];
     [super viewDidUnload];
 }
 
 - (void)dealloc {
 	[webService release];
 	[seSites release];
+    [cellSite release];
     [super dealloc];
 }
 
