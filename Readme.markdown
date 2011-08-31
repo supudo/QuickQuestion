@@ -1,3 +1,3 @@
 # QuickQuestion
 
-Quick search throughout the Stack Exchanges sites
+Quick search throughout the StackExchange sites

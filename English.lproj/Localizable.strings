@@ -11,6 +11,13 @@
 
 "Sites" = "Sites";
 
+"SearchBy.Keyword" = "Keyword Search";
+"SearchBy.Questions" = "Questions";
+"SearchBy.Tags" = "Tags";
+"SearchBy.Answers" = "Answers";
+"SearchBy.Comments" = "Comments";
+"SearchFor" = "Search for ...";
+
 "UI.RefreshPullDown" = "Pull down to refresh...";
 "UI.RefreshRelease" = "Release to refresh...";
 "UI.RefreshLoading" = "Loading...";

@@ -13,7 +13,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(QQSettings);
 
-@synthesize inDebugMode, consumeKey, apiURL, apiURLAuth, lastAPIRequest;
+@synthesize inDebugMode, consumeKey, apiURL, apiURLAuth, selectedSite, lastRequestMethod, searchQuery, lastAPIRequest, searchBy;
 
 - (void)LogThis:(NSString *)log, ... {
 	if (self.inDebugMode) {
@@ -42,7 +42,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(QQSettings);
 		self.consumeKey = @"pBjnkNsSR02fnbPARTwOlg";
 		self.apiURL = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"QQAPIURL"];
 		self.apiURLAuth = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"QQAPIURLAuth"];
-        self.lastAPIRequest = nil;
+        self.selectedSite = nil;
+        self.searchBy = QQSearchByTags;
+        self.lastRequestMethod = @"";
+        self.searchQuery = @"";
+
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        self.lastAPIRequest = [prefs objectForKey:@"lastAPIRequest"];
+        if (self.lastAPIRequest == nil) {
+            self.lastAPIRequest = nil;
+            [prefs setObject:[NSDate date] forKey:@"lastAPIRequest"];
+        }
+        [prefs synchronize];
 	}
 	return self;
 }

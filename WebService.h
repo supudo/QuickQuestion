@@ -15,7 +15,10 @@
 
 @property (nonatomic, retain) URLReader *urlReader;
 
-- (NSString *)getSites:(int)page pageSize:(int)pSize;
-- (NSDictionary *)getSitesDictionary:(int)page pageSize:(int)pSize;
+- (NSDictionary *)getSites:(int)page pageSize:(int)pSize;
+- (NSDictionary *)getTags:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl;
+- (NSDictionary *)getQuestions:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl;
+- (NSDictionary *)getAnswers:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl;
+- (NSDictionary *)getComments:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl;
 
 @end

@@ -18,23 +18,20 @@
 
 @synthesize urlReader;
 
-#pragma mark -
-#pragma mark Sites
-
-- (NSDictionary *)getSitesDictionary:(int)page pageSize:(int)pSize {
-    if ([QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
+- (NSDictionary *)getSites:(int)page pageSize:(int)pSize {
+    if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"sites"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
+        [QQSettings sharedQQSettings].lastRequestMethod = @"sites";
+        [[QQSettings sharedQQSettings] LogThis:@"URL : %@sites?page=%i&pagesize=%i", [QQSettings sharedQQSettings].apiURLAuth, page, pSize];
         [QQSettings sharedQQSettings].lastAPIRequest = [NSDate date];
-        NSLog(@"LAST REQUEST = %f", [[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow]);
         if (urlReader == nil)
             urlReader = [[URLReader alloc] init];
         [urlReader setDelegate:self];
 
-        [[QQSettings sharedQQSettings] LogThis:@"URL : %@sites?page=%i&pagesize=%i", [QQSettings sharedQQSettings].apiURLAuth, page, pSize];
         NSString *urlResponse;
         if (page == 0 || pSize == 0)
-            urlResponse = [urlReader getFromURL:[NSString stringWithFormat:@"%@sites", [QQSettings sharedQQSettings].apiURLAuth] postData:@"" postMethod:@"GET"];
+            urlResponse = [urlReader getFromURL:[NSString stringWithFormat:@"%@sites?key=%@", [QQSettings sharedQQSettings].apiURLAuth, [QQSettings sharedQQSettings].consumeKey] postData:@"" postMethod:@"GET"];
         else
-            urlResponse = [urlReader getFromURL:[NSString stringWithFormat:@"%@sites?page=%i&pagesize=%i", [QQSettings sharedQQSettings].apiURLAuth, page, pSize] postData:@"" postMethod:@"GET"];
+            urlResponse = [urlReader getFromURL:[NSString stringWithFormat:@"%@sites?key=%@&page=%i&pagesize=%i", [QQSettings sharedQQSettings].apiURLAuth, [QQSettings sharedQQSettings].consumeKey, page, pSize] postData:@"" postMethod:@"GET"];
         
         if (![urlResponse isEqualToString:@""]) {
             dbJSON *dbobj = (dbJSON *)[NSEntityDescription insertNewObjectForEntityForName:@"JSON" inManagedObjectContext:[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext]];
@@ -54,6 +51,7 @@
         }
     }
     else {
+        [[QQSettings sharedQQSettings] LogThis:@"Cached : %@sites?page=%i&pagesize=%i", [QQSettings sharedQQSettings].apiURLAuth, page, pSize];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"RequestMethod = %@ AND RequestParams = %@", @"sites", [NSString stringWithFormat:@"page=%i&pagesize=%i", page, pSize]];
         dbJSON *dbobj = (dbJSON *)[[DBManagedObjectContext sharedDBManagedObjectContext] getEntity:@"JSON" predicate:predicate];
         NSError *theError = NULL;
@@ -64,29 +62,244 @@
     return nil;
 }
 
-- (NSString *)getSites:(int)page pageSize:(int)pSize {
-	if (urlReader == nil)
-		urlReader = [[URLReader alloc] init];
-	[urlReader setDelegate:self];
+- (NSDictionary *)getTags:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
+    NSMutableString *requestURL = [[NSMutableString alloc] init];
+    [requestURL setString:@""];
+    [requestURL appendFormat:@"%@/tags", apiurl];
+    [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
+    if (page != 0 && pSize != 0)
+        [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
+    else
+        [requestURL appendFormat:@"&page=1&pagesize=50"];
+    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+        [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
 
-	[[QQSettings sharedQQSettings] LogThis:@"URL : %@sites?page=%i&pagesize=%i", [QQSettings sharedQQSettings].apiURLAuth, page, pSize];
-	NSString *urlResponse;
-	if (page == 0 || pSize == 0)
-		urlResponse = [urlReader getFromURL:[NSString stringWithFormat:@"%@sites", [QQSettings sharedQQSettings].apiURLAuth] postData:@"" postMethod:@"GET"];
-	else
-		urlResponse = [urlReader getFromURL:[NSString stringWithFormat:@"%@sites?page=%i&pagesize=%i", [QQSettings sharedQQSettings].apiURLAuth, page, pSize] postData:@"" postMethod:@"GET"];
-	
-	NSData *rawData = [urlResponse dataUsingEncoding:NSUTF8StringEncoding];
-	if (rawData != NULL) {
-		NSError *theError = nil;
-		id json = [[CJSONDeserializer deserializer] deserialize:rawData error:&theError];
-		NSData *jsonData = [[CJSONSerializer serializer] serializeObject:json error:&theError];
-		if (jsonData != NULL)
-			return [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] autorelease];
-	}
-	return @"";
+    if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"tags"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
+        [QQSettings sharedQQSettings].lastRequestMethod = @"tags";
+
+        [[QQSettings sharedQQSettings] LogThis:@"URL : %@", requestURL];
+
+        [QQSettings sharedQQSettings].lastAPIRequest = [NSDate date];
+        if (urlReader == nil)
+            urlReader = [[URLReader alloc] init];
+        [urlReader setDelegate:self];
+        
+        NSString *urlResponse;
+        if (page == 0 || pSize == 0)
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+        else
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+
+        if (![urlResponse isEqualToString:@""]) {
+            dbJSON *dbobj = (dbJSON *)[NSEntityDescription insertNewObjectForEntityForName:@"JSON" inManagedObjectContext:[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext]];
+            [dbobj setRequestMethod:@"tags"];
+            [dbobj setRequestParams:requestURL];
+            [dbobj setTimestamp:[QQSettings sharedQQSettings].lastAPIRequest];
+            [dbobj setJSONData:urlResponse];
+            
+            NSError *error = nil;
+            if (![[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext] save:&error])
+                abort();
+            
+            NSError *theError = NULL;
+            NSDictionary *dict = [NSDictionary dictionaryWithJSONString:urlResponse error:&theError];
+            if (theError == NULL)
+                return dict;
+        }
+    }
+    else {
+        [[QQSettings sharedQQSettings] LogThis:@"Cached : %@", requestURL];
+
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"RequestMethod = %@ AND RequestParams = %@", @"tags", requestURL];
+        dbJSON *dbobj = (dbJSON *)[[DBManagedObjectContext sharedDBManagedObjectContext] getEntity:@"JSON" predicate:predicate];
+        NSError *theError = NULL;
+        NSDictionary *dict = [NSDictionary dictionaryWithJSONString:dbobj.JSONData error:&theError];
+        if (theError == NULL)
+            return dict;
+    }
+    return nil;
 }
 
-#pragma mark -
+- (NSDictionary *)getQuestions:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
+    NSMutableString *requestURL = [[NSMutableString alloc] init];
+    [requestURL setString:@""];
+    [requestURL appendFormat:@"%@/questions", apiurl];
+    [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
+    [requestURL appendFormat:@"&answers=false"];
+    [requestURL appendFormat:@"&body=false"];
+    [requestURL appendFormat:@"&comments=false"];
+    if (page != 0 && pSize != 0)
+        [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
+    else
+        [requestURL appendFormat:@"&page=1&pagesize=25"];
+    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+        [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
+    
+    if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"questions"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
+        [QQSettings sharedQQSettings].lastRequestMethod = @"questions";
+        
+        [[QQSettings sharedQQSettings] LogThis:@"URL : %@", requestURL];
+        
+        [QQSettings sharedQQSettings].lastAPIRequest = [NSDate date];
+        if (urlReader == nil)
+            urlReader = [[URLReader alloc] init];
+        [urlReader setDelegate:self];
+        
+        NSString *urlResponse;
+        if (page == 0 || pSize == 0)
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+        else
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+        
+        if (![urlResponse isEqualToString:@""]) {
+            dbJSON *dbobj = (dbJSON *)[NSEntityDescription insertNewObjectForEntityForName:@"JSON" inManagedObjectContext:[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext]];
+            [dbobj setRequestMethod:@"questions"];
+            [dbobj setRequestParams:requestURL];
+            [dbobj setTimestamp:[QQSettings sharedQQSettings].lastAPIRequest];
+            [dbobj setJSONData:urlResponse];
+            
+            NSError *error = nil;
+            if (![[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext] save:&error])
+                abort();
+            
+            NSError *theError = NULL;
+            NSDictionary *dict = [NSDictionary dictionaryWithJSONString:urlResponse error:&theError];
+            if (theError == NULL)
+                return dict;
+        }
+    }
+    else {
+        [[QQSettings sharedQQSettings] LogThis:@"Cached : %@", requestURL];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"RequestMethod = %@ AND RequestParams = %@", @"questions", requestURL];
+        dbJSON *dbobj = (dbJSON *)[[DBManagedObjectContext sharedDBManagedObjectContext] getEntity:@"JSON" predicate:predicate];
+        NSError *theError = NULL;
+        NSDictionary *dict = [NSDictionary dictionaryWithJSONString:dbobj.JSONData error:&theError];
+        if (theError == NULL)
+            return dict;
+    }
+    return nil;
+}
+
+- (NSDictionary *)getAnswers:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
+    NSMutableString *requestURL = [[NSMutableString alloc] init];
+    [requestURL setString:@""];
+    [requestURL appendFormat:@"%@/answers", apiurl];
+    [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
+    [requestURL appendFormat:@"&body=false"];
+    [requestURL appendFormat:@"&comments=false"];
+    if (page != 0 && pSize != 0)
+        [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
+    else
+        [requestURL appendFormat:@"&page=1&pagesize=25"];
+    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+        [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
+    
+    if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"answers"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
+        [QQSettings sharedQQSettings].lastRequestMethod = @"answers";
+        
+        [[QQSettings sharedQQSettings] LogThis:@"URL : %@", requestURL];
+        
+        [QQSettings sharedQQSettings].lastAPIRequest = [NSDate date];
+        if (urlReader == nil)
+            urlReader = [[URLReader alloc] init];
+        [urlReader setDelegate:self];
+        
+        NSString *urlResponse;
+        if (page == 0 || pSize == 0)
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+        else
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+        
+        if (![urlResponse isEqualToString:@""]) {
+            dbJSON *dbobj = (dbJSON *)[NSEntityDescription insertNewObjectForEntityForName:@"JSON" inManagedObjectContext:[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext]];
+            [dbobj setRequestMethod:@"answers"];
+            [dbobj setRequestParams:requestURL];
+            [dbobj setTimestamp:[QQSettings sharedQQSettings].lastAPIRequest];
+            [dbobj setJSONData:urlResponse];
+            
+            NSError *error = nil;
+            if (![[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext] save:&error])
+                abort();
+            
+            NSError *theError = NULL;
+            NSDictionary *dict = [NSDictionary dictionaryWithJSONString:urlResponse error:&theError];
+            if (theError == NULL)
+                return dict;
+        }
+    }
+    else {
+        [[QQSettings sharedQQSettings] LogThis:@"Cached : %@", requestURL];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"RequestMethod = %@ AND RequestParams = %@", @"answers", requestURL];
+        dbJSON *dbobj = (dbJSON *)[[DBManagedObjectContext sharedDBManagedObjectContext] getEntity:@"JSON" predicate:predicate];
+        NSError *theError = NULL;
+        NSDictionary *dict = [NSDictionary dictionaryWithJSONString:dbobj.JSONData error:&theError];
+        if (theError == NULL)
+            return dict;
+    }
+    return nil;
+}
+
+- (NSDictionary *)getComments:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
+    NSMutableString *requestURL = [[NSMutableString alloc] init];
+    [requestURL setString:@""];
+    [requestURL appendFormat:@"%@/comments", apiurl];
+    [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
+    [requestURL appendFormat:@"&answers=false"];
+    [requestURL appendFormat:@"&body=false"];
+    [requestURL appendFormat:@"&comments=false"];
+    if (page != 0 && pSize != 0)
+        [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
+    else
+        [requestURL appendFormat:@"&page=1&pagesize=25"];
+    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+        [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
+    
+    if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"comments"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
+        [QQSettings sharedQQSettings].lastRequestMethod = @"comments";
+        
+        [[QQSettings sharedQQSettings] LogThis:@"URL : %@", requestURL];
+        
+        [QQSettings sharedQQSettings].lastAPIRequest = [NSDate date];
+        if (urlReader == nil)
+            urlReader = [[URLReader alloc] init];
+        [urlReader setDelegate:self];
+        
+        NSString *urlResponse;
+        if (page == 0 || pSize == 0)
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+        else
+            urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
+        
+        if (![urlResponse isEqualToString:@""]) {
+            dbJSON *dbobj = (dbJSON *)[NSEntityDescription insertNewObjectForEntityForName:@"JSON" inManagedObjectContext:[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext]];
+            [dbobj setRequestMethod:@"comments"];
+            [dbobj setRequestParams:requestURL];
+            [dbobj setTimestamp:[QQSettings sharedQQSettings].lastAPIRequest];
+            [dbobj setJSONData:urlResponse];
+            
+            NSError *error = nil;
+            if (![[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext] save:&error])
+                abort();
+            
+            NSError *theError = NULL;
+            NSDictionary *dict = [NSDictionary dictionaryWithJSONString:urlResponse error:&theError];
+            if (theError == NULL)
+                return dict;
+        }
+    }
+    else {
+        [[QQSettings sharedQQSettings] LogThis:@"Cached : %@", requestURL];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"RequestMethod = %@ AND RequestParams = %@", @"comments", requestURL];
+        dbJSON *dbobj = (dbJSON *)[[DBManagedObjectContext sharedDBManagedObjectContext] getEntity:@"JSON" predicate:predicate];
+        NSError *theError = NULL;
+        NSDictionary *dict = [NSDictionary dictionaryWithJSONString:dbobj.JSONData error:&theError];
+        if (theError == NULL)
+            return dict;
+    }
+    return nil;
+}
 
 @end

@@ -16,8 +16,8 @@
 		8A21DC3C140BD18700AAA699 /* QQSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21DC3B140BD18700AAA699 /* QQSettings.m */; };
 		8A21DC6C140BD3A400AAA699 /* Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21DC6A140BD3A400AAA699 /* Loading.m */; };
 		8A21DC6D140BD3A400AAA699 /* Loading.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DC6B140BD3A400AAA699 /* Loading.xib */; };
-		8A21DC73140BD3D500AAA699 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21DC71140BD3D500AAA699 /* Search.m */; };
-		8A21DC74140BD3D500AAA699 /* Search.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DC72140BD3D500AAA699 /* Search.xib */; };
+		8A21DC73140BD3D500AAA699 /* Sites.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21DC71140BD3D500AAA699 /* Sites.m */; };
+		8A21DC74140BD3D500AAA699 /* Sites.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DC72140BD3D500AAA699 /* Sites.xib */; };
 		8A21DC9C140CD1FF00AAA699 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DC9B140CD1FF00AAA699 /* Localizable.strings */; };
 		8A21DCA2140CD21700AAA699 /* URLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21DC9F140CD21700AAA699 /* URLReader.m */; };
 		8A21DCA3140CD21700AAA699 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21DCA1140CD21700AAA699 /* Reachability.m */; };
@@ -58,6 +58,12 @@
 		8A21E167140D0B5000AAA699 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21E120140D0B5000AAA699 /* ASINetworkQueue.m */; };
 		8A21E18B140D0B7F00AAA699 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A21E18A140D0B7F00AAA699 /* CFNetwork.framework */; };
 		8A21E19F140D0BA800AAA699 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A21E19E140D0BA800AAA699 /* MobileCoreServices.framework */; };
+		8AD672C8140E2AA90041D0D1 /* CellSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD672C6140E2AA90041D0D1 /* CellSite.m */; };
+		8AD672C9140E2AA90041D0D1 /* CellSite.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD672C7140E2AA90041D0D1 /* CellSite.xib */; };
+		8AD672CD140E37DB0041D0D1 /* SearchBy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD672CB140E37DB0041D0D1 /* SearchBy.m */; };
+		8AD672CE140E37DB0041D0D1 /* SearchBy.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD672CC140E37DB0041D0D1 /* SearchBy.xib */; };
+		8AD672F5140E4DBE0041D0D1 /* Items.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD672F3140E4DBE0041D0D1 /* Items.m */; };
+		8AD672F6140E4DBE0041D0D1 /* Items.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD672F4140E4DBE0041D0D1 /* Items.xib */; };
 		8AEEC5BB140D11500097389E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AEEC5B9140D11500097389E /* libxml2.dylib */; };
 		8AEEC5BC140D11500097389E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AEEC5BA140D11500097389E /* libz.dylib */; };
 		8AEEC5BE140D12F90097389E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AEEC5BD140D12F90097389E /* CoreData.framework */; };
@@ -82,9 +88,9 @@
 		8A21DC69140BD3A400AAA699 /* Loading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Loading.h; path = ../Loading.h; sourceTree = "<group>"; };
 		8A21DC6A140BD3A400AAA699 /* Loading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Loading.m; path = ../Loading.m; sourceTree = "<group>"; };
 		8A21DC6B140BD3A400AAA699 /* Loading.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Loading.xib; sourceTree = "<group>"; };
-		8A21DC70140BD3D500AAA699 /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Search.h; path = ../Search.h; sourceTree = "<group>"; };
-		8A21DC71140BD3D500AAA699 /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Search.m; path = ../Search.m; sourceTree = "<group>"; };
-		8A21DC72140BD3D500AAA699 /* Search.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Search.xib; sourceTree = "<group>"; };
+		8A21DC70140BD3D500AAA699 /* Sites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sites.h; path = ../Sites.h; sourceTree = "<group>"; };
+		8A21DC71140BD3D500AAA699 /* Sites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Sites.m; path = ../Sites.m; sourceTree = "<group>"; };
+		8A21DC72140BD3D500AAA699 /* Sites.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Sites.xib; sourceTree = "<group>"; };
 		8A21DC99140CD1FA00AAA699 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8A21DC9E140CD21700AAA699 /* URLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLReader.h; sourceTree = "<group>"; };
 		8A21DC9F140CD21700AAA699 /* URLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLReader.m; sourceTree = "<group>"; };
@@ -153,6 +159,15 @@
 		8A21E121140D0B5000AAA699 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIProgressDelegate.h; path = ASIHTTPRequest/ASIProgressDelegate.h; sourceTree = "<group>"; };
 		8A21E18A140D0B7F00AAA699 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		8A21E19E140D0BA800AAA699 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8AD672C5140E2AA90041D0D1 /* CellSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellSite.h; path = ../CellSite.h; sourceTree = "<group>"; };
+		8AD672C6140E2AA90041D0D1 /* CellSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CellSite.m; path = ../CellSite.m; sourceTree = "<group>"; };
+		8AD672C7140E2AA90041D0D1 /* CellSite.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellSite.xib; sourceTree = "<group>"; };
+		8AD672CA140E37DB0041D0D1 /* SearchBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBy.h; path = ../SearchBy.h; sourceTree = "<group>"; };
+		8AD672CB140E37DB0041D0D1 /* SearchBy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBy.m; path = ../SearchBy.m; sourceTree = "<group>"; };
+		8AD672CC140E37DB0041D0D1 /* SearchBy.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBy.xib; sourceTree = "<group>"; };
+		8AD672F2140E4DBD0041D0D1 /* Items.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Items.h; path = ../Items.h; sourceTree = "<group>"; };
+		8AD672F3140E4DBE0041D0D1 /* Items.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Items.m; path = ../Items.m; sourceTree = "<group>"; };
+		8AD672F4140E4DBE0041D0D1 /* Items.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Items.xib; sourceTree = "<group>"; };
 		8AEEC5B9140D11500097389E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		8AEEC5BA140D11500097389E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		8AEEC5BD140D12F90097389E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -188,6 +203,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8AD672BE140E2A610041D0D1 /* Extended */,
 				8A21DC5D140BD2D600AAA699 /* Controllers */,
 			);
 			path = Classes;
@@ -270,6 +286,7 @@
 			children = (
 				8A21DC68140BD39900AAA699 /* Modals */,
 				8A21DC6F140BD3C900AAA699 /* Search */,
+				8AD672DC140E46FE0041D0D1 /* Content */,
 				1D3623240D0F684500981E51 /* QuickQuestionAppDelegate.h */,
 				1D3623250D0F684500981E51 /* QuickQuestionAppDelegate.m */,
 			);
@@ -279,8 +296,10 @@
 		8A21DC5E140BD2DA00AAA699 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8AD672BF140E2A6A0041D0D1 /* Extended */,
 				8A21DC67140BD39300AAA699 /* Modals */,
 				8A21DC6E140BD3C500AAA699 /* Search */,
+				8AD672DD140E47140041D0D1 /* Content */,
 				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
 			);
 			name = Controllers;
@@ -326,7 +345,8 @@
 		8A21DC6E140BD3C500AAA699 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				8A21DC72140BD3D500AAA699 /* Search.xib */,
+				8A21DC72140BD3D500AAA699 /* Sites.xib */,
+				8AD672CC140E37DB0041D0D1 /* SearchBy.xib */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -334,8 +354,10 @@
 		8A21DC6F140BD3C900AAA699 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				8A21DC70140BD3D500AAA699 /* Search.h */,
-				8A21DC71140BD3D500AAA699 /* Search.m */,
+				8A21DC70140BD3D500AAA699 /* Sites.h */,
+				8A21DC71140BD3D500AAA699 /* Sites.m */,
+				8AD672CA140E37DB0041D0D1 /* SearchBy.h */,
+				8AD672CB140E37DB0041D0D1 /* SearchBy.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -500,6 +522,40 @@
 			name = ASIHTTPRequest;
 			sourceTree = "<group>";
 		};
+		8AD672BE140E2A610041D0D1 /* Extended */ = {
+			isa = PBXGroup;
+			children = (
+				8AD672C5140E2AA90041D0D1 /* CellSite.h */,
+				8AD672C6140E2AA90041D0D1 /* CellSite.m */,
+			);
+			name = Extended;
+			sourceTree = "<group>";
+		};
+		8AD672BF140E2A6A0041D0D1 /* Extended */ = {
+			isa = PBXGroup;
+			children = (
+				8AD672C7140E2AA90041D0D1 /* CellSite.xib */,
+			);
+			name = Extended;
+			sourceTree = "<group>";
+		};
+		8AD672DC140E46FE0041D0D1 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				8AD672F2140E4DBD0041D0D1 /* Items.h */,
+				8AD672F3140E4DBE0041D0D1 /* Items.m */,
+			);
+			name = Content;
+			sourceTree = "<group>";
+		};
+		8AD672DD140E47140041D0D1 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				8AD672F4140E4DBE0041D0D1 /* Items.xib */,
+			);
+			name = Content;
+			sourceTree = "<group>";
+		};
 		8AEEC5BF140D131F0097389E /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -582,7 +638,7 @@
 			files = (
 				28AD73880D9D96C1002E5188 /* MainWindow.xib in Resources */,
 				8A21DC6D140BD3A400AAA699 /* Loading.xib in Resources */,
-				8A21DC74140BD3D500AAA699 /* Search.xib in Resources */,
+				8A21DC74140BD3D500AAA699 /* Sites.xib in Resources */,
 				8A21DC9C140CD1FF00AAA699 /* Localizable.strings in Resources */,
 				8A21E027140CFEA300AAA699 /* Ubuntu-Bold.ttf in Resources */,
 				8A21E028140CFEA300AAA699 /* Ubuntu-BoldItalic.ttf in Resources */,
@@ -596,6 +652,9 @@
 				8A21E03D140CFF2100AAA699 /* tb-search.png in Resources */,
 				8A21E05D140CFFA500AAA699 /* loading_arrow.png in Resources */,
 				8A21E104140D08EF00AAA699 /* Readme.markdown in Resources */,
+				8AD672C9140E2AA90041D0D1 /* CellSite.xib in Resources */,
+				8AD672CE140E37DB0041D0D1 /* SearchBy.xib in Resources */,
+				8AD672F6140E4DBE0041D0D1 /* Items.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,7 +669,7 @@
 				1D3623260D0F684500981E51 /* QuickQuestionAppDelegate.m in Sources */,
 				8A21DC3C140BD18700AAA699 /* QQSettings.m in Sources */,
 				8A21DC6C140BD3A400AAA699 /* Loading.m in Sources */,
-				8A21DC73140BD3D500AAA699 /* Search.m in Sources */,
+				8A21DC73140BD3D500AAA699 /* Sites.m in Sources */,
 				8A21DCA2140CD21700AAA699 /* URLReader.m in Sources */,
 				8A21DCA3140CD21700AAA699 /* Reachability.m in Sources */,
 				8A21DCA7140CD22800AAA699 /* BlackAlertView.m in Sources */,
@@ -637,6 +696,9 @@
 				8AEEC5C5140D13760097389E /* QQ.xcdatamodeld in Sources */,
 				8AEEC5CA140D14E90097389E /* DBManagedObjectContext.m in Sources */,
 				8AEEC5CD140D15090097389E /* dbJSON.m in Sources */,
+				8AD672C8140E2AA90041D0D1 /* CellSite.m in Sources */,
+				8AD672CD140E37DB0041D0D1 /* SearchBy.m in Sources */,
+				8AD672F5140E4DBE0041D0D1 /* Items.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

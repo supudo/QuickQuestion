@@ -11,13 +11,24 @@
 
 @interface QQSettings : NSObject {
 	BOOL inDebugMode;
-	NSString *consumeKey, *apiURL, *apiURLAuth;
+	NSString *consumeKey, *apiURL, *apiURLAuth, *lastRequestMethod, *searchQuery;
     NSDate *lastAPIRequest;
+    int searchBy;
+    NSDictionary *selectedSite;
 }
 
+typedef enum QQSearchBy {
+	QQSearchByTags = 0,
+	QQSearchByQuestions,
+    QQSearchByAnswers,
+	QQSearchByComments
+} QQSearchBy;
+
 @property BOOL inDebugMode;
-@property (nonatomic, retain) NSString *consumeKey, *apiURL, *apiURLAuth;
+@property (nonatomic, retain) NSString *consumeKey, *apiURL, *apiURLAuth, *lastRequestMethod, *searchQuery;
 @property (nonatomic, retain) NSDate *lastAPIRequest;
+@property int searchBy;
+@property (nonatomic, retain) NSDictionary *selectedSite;
 
 - (void)LogThis:(NSString *)log, ...;
 - (BOOL)connectedToInternet;
