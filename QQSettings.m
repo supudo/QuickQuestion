@@ -13,7 +13,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(QQSettings);
 
-@synthesize inDebugMode, consumeKey, apiURL, apiURLAuth, selectedSite, lastRequestMethod, searchQuery, lastAPIRequest, searchBy;
+@synthesize inDebugMode, consumeKey, apiURL, apiURLAuth, selectedSite, lastRequestMethod, searchQuery, lastAPIRequest, searchBy, apiVersion;
 
 - (void)LogThis:(NSString *)log, ... {
 	if (self.inDebugMode) {
@@ -46,6 +46,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(QQSettings);
         self.searchBy = QQSearchByTags;
         self.lastRequestMethod = @"";
         self.searchQuery = @"";
+        self.apiVersion = @"1.1";
 
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         self.lastAPIRequest = [prefs objectForKey:@"lastAPIRequest"];

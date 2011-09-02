@@ -65,13 +65,11 @@
 - (NSDictionary *)getTags:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
     NSMutableString *requestURL = [[NSMutableString alloc] init];
     [requestURL setString:@""];
-    [requestURL appendFormat:@"%@/tags", apiurl];
+    [requestURL appendFormat:@"%@/%@/tags", apiurl, [QQSettings sharedQQSettings].apiVersion];
     [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
     if (page != 0 && pSize != 0)
         [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
-    else
-        [requestURL appendFormat:@"&page=1&pagesize=50"];
-    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+    if ([QQSettings sharedQQSettings].searchQuery != nil && ![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
         [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
 
     if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"tags"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
@@ -89,7 +87,7 @@
             urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
         else
             urlResponse = [urlReader getFromURL:requestURL postData:@"" postMethod:@"GET"];
-
+        NSLog(@"%@", urlResponse);
         if (![urlResponse isEqualToString:@""]) {
             dbJSON *dbobj = (dbJSON *)[NSEntityDescription insertNewObjectForEntityForName:@"JSON" inManagedObjectContext:[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext]];
             [dbobj setRequestMethod:@"tags"];
@@ -123,16 +121,14 @@
 - (NSDictionary *)getQuestions:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
     NSMutableString *requestURL = [[NSMutableString alloc] init];
     [requestURL setString:@""];
-    [requestURL appendFormat:@"%@/questions", apiurl];
+    [requestURL appendFormat:@"%@/%@/questions", apiurl, [QQSettings sharedQQSettings].apiVersion];
     [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
     [requestURL appendFormat:@"&answers=false"];
     [requestURL appendFormat:@"&body=false"];
     [requestURL appendFormat:@"&comments=false"];
     if (page != 0 && pSize != 0)
         [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
-    else
-        [requestURL appendFormat:@"&page=1&pagesize=25"];
-    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+    if ([QQSettings sharedQQSettings].searchQuery != nil && ![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
         [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
     
     if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"questions"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
@@ -184,15 +180,13 @@
 - (NSDictionary *)getAnswers:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
     NSMutableString *requestURL = [[NSMutableString alloc] init];
     [requestURL setString:@""];
-    [requestURL appendFormat:@"%@/answers", apiurl];
+    [requestURL appendFormat:@"%@/%@/answers", apiurl, [QQSettings sharedQQSettings].apiVersion];
     [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
     [requestURL appendFormat:@"&body=false"];
     [requestURL appendFormat:@"&comments=false"];
     if (page != 0 && pSize != 0)
         [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
-    else
-        [requestURL appendFormat:@"&page=1&pagesize=25"];
-    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+    if ([QQSettings sharedQQSettings].searchQuery != nil && ![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
         [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
     
     if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"answers"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
@@ -244,16 +238,14 @@
 - (NSDictionary *)getComments:(int)page pageSize:(int)pSize apiURL:(NSString *)apiurl {
     NSMutableString *requestURL = [[NSMutableString alloc] init];
     [requestURL setString:@""];
-    [requestURL appendFormat:@"%@/comments", apiurl];
+    [requestURL appendFormat:@"%@/%@/comments", apiurl, [QQSettings sharedQQSettings].apiVersion];
     [requestURL appendFormat:@"?key=%@", [QQSettings sharedQQSettings].consumeKey];
     [requestURL appendFormat:@"&answers=false"];
     [requestURL appendFormat:@"&body=false"];
     [requestURL appendFormat:@"&comments=false"];
     if (page != 0 && pSize != 0)
         [requestURL appendFormat:@"&page=%i&pagesize=%i", page, pSize];
-    else
-        [requestURL appendFormat:@"&page=1&pagesize=25"];
-    if (![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
+    if ([QQSettings sharedQQSettings].searchQuery != nil && ![[QQSettings sharedQQSettings].searchQuery isEqualToString:@""])
         [requestURL appendFormat:@"&filter=%@", [QQSettings sharedQQSettings].searchQuery];
     
     if (![[QQSettings sharedQQSettings].lastRequestMethod isEqualToString:@"comments"] || [QQSettings sharedQQSettings].lastAPIRequest == nil || ([[QQSettings sharedQQSettings].lastAPIRequest timeIntervalSinceNow] * -1) > 60) {
@@ -278,7 +270,7 @@
             [dbobj setRequestParams:requestURL];
             [dbobj setTimestamp:[QQSettings sharedQQSettings].lastAPIRequest];
             [dbobj setJSONData:urlResponse];
-            
+
             NSError *error = nil;
             if (![[[DBManagedObjectContext sharedDBManagedObjectContext] managedObjectContext] save:&error])
                 abort();

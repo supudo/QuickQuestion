@@ -11,7 +11,7 @@
 
 @interface QQSettings : NSObject {
 	BOOL inDebugMode;
-	NSString *consumeKey, *apiURL, *apiURLAuth, *lastRequestMethod, *searchQuery;
+	NSString *consumeKey, *apiURL, *apiURLAuth, *lastRequestMethod, *searchQuery, *apiVersion;
     NSDate *lastAPIRequest;
     int searchBy;
     NSDictionary *selectedSite;
@@ -25,7 +25,7 @@ typedef enum QQSearchBy {
 } QQSearchBy;
 
 @property BOOL inDebugMode;
-@property (nonatomic, retain) NSString *consumeKey, *apiURL, *apiURLAuth, *lastRequestMethod, *searchQuery;
+@property (nonatomic, retain) NSString *consumeKey, *apiURL, *apiURLAuth, *lastRequestMethod, *searchQuery, *apiVersion;
 @property (nonatomic, retain) NSDate *lastAPIRequest;
 @property int searchBy;
 @property (nonatomic, retain) NSDictionary *selectedSite;

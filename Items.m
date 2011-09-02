@@ -99,12 +99,45 @@ static NSString *kCellIdentifier = @"identifItems";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
-    cell.textLabel.text = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"name"];
+    switch ([QQSettings sharedQQSettings].searchBy) {
+        case QQSearchByTags:
+            cell.textLabel.text = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"name"];
+            break;
+        case QQSearchByQuestions:
+            cell.textLabel.text = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"title"];
+            break;
+        case QQSearchByAnswers:
+            cell.textLabel.text = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"title"];
+            break;
+        case QQSearchByComments:
+            cell.textLabel.text = [[[contentItems objectAtIndex:indexPath.row] objectForKey:@"owner"] valueForKey:@"display_name"];
+            break;
+        default:
+            break;
+    }
     [cell.textLabel setFont:[UIFont fontWithName:@"Ubuntu" size:14.0]];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *url;
+    switch ([QQSettings sharedQQSettings].searchBy) {
+        case QQSearchByTags:
+            url = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"question_answers_url"];
+            break;
+        case QQSearchByQuestions:
+            url = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"question_answers_url"];
+            break;
+        case QQSearchByAnswers:
+            url = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"question_answers_url"];
+            break;
+        case QQSearchByComments:
+            url = [[contentItems objectAtIndex:indexPath.row] objectForKey:@"question_answers_url"];
+            break;
+        default:
+            break;
+    }
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
